@@ -32,7 +32,7 @@ Este es un proyecto de buscador web simple creado con HTML, CSS y JavaScript. La
 1. Clona este repositorio en tu máquina local:
 
    ```bash
-   git clone https://github.com/yourusername/web_browser.git
+   git clone https://github.com/moder-io/Web_Search.git
    ```
 
 2. Abre el archivo `index.html` en tu navegador.
