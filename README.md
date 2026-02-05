@@ -1,7 +1,7 @@
 
-# Web Browser
+# Web Search
 
-Este es un proyecto de navegador web simple creado con HTML, CSS y JavaScript. La página incluye accesos directos a aplicaciones populares como Gmail, YouTube, Google Photos, Microsoft Office, y más. También permite realizar búsquedas en la web utilizando Google.
+Este es un proyecto de buscador web simple creado con HTML, CSS y JavaScript. La página incluye accesos directos a aplicaciones populares como Gmail, YouTube, Google Photos, Microsoft Office, y más. También permite realizar búsquedas en la web utilizando Google.
 
 ## Características
 
