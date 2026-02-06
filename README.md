@@ -38,7 +38,7 @@ Este es un proyecto de buscador web simple creado con HTML, CSS y JavaScript. La
 
 2. Abre el archivo `index.html` en tu navegador.
 
-3. Si quieres usar el widjet del clima tendras que renombrar api.js.example a api.js e introducir los datos
+3. Si quieres usar el widget del clima tendras que renombrar api.js.example a api.js e introducir los datos.
 
 ## Cómo usar
 
