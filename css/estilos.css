@@ -4,6 +4,13 @@
     box-sizing: border-box;
 }
 
+
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
@@ -257,31 +264,6 @@ button:hover {
   background-color: #8f0101;
 }
 
-.search-input-box {
-	width: 100%;
-	background-color: #2f3640;
-	border-radius: 100px;
-	position: absolute;
-	color: #444444;
-    margin-top: 90px;
-    width: 300px;
-    margin-left: 450px;
-    animation-name: despliegue-barra;
-    animation-duration: 1.5s;
-    animation-timing-function: ease-in-out;
-}
-
-.search-input-box input {
-	width: 150%;
-	border: none;
-	outline: none;
-	border-radius: 120px;
-	height: 55px;
-	padding: 0 60px 0 20px;
-	font-size: 18px;
-    position: absolute;
-    color: #000000;
-}
 
 
 #weather {
@@ -361,105 +343,6 @@ main {
       100% {margin-left: 150px;}
 }
 
-.shortcuts {
-    top: 0px;
-    width: 1000px;
-    height: 100px;
-    position: absolute;
-    z-index: 2;
-    visibility: hidden;
-}
-
-.shortcut1{
-    margin-top: 210px;
-    margin-left: 470px;
-    width: 100px;
-    height: 100px;
-    border-radius: 10px;
-    position: absolute;
-    cursor: pointer;
-    visibility: visible;
-}
-
-.shortcut1:hover {
-    background-color: #b8b8b846;
-}
-.shortcut2{
-    margin-top: 210px;
-    margin-left: 570px;
-    width: 100px;
-    height: 100px;
-    border-radius: 10px;
-    position: absolute;
-    cursor: pointer;
-    visibility: visible;
-}
-
-.shortcut2:hover {
-    background-color: #b8b8b846;
-}
-.shortcut3{
-    margin-top: 210px;
-    margin-left: 670px;
-    width: 100px;
-    height: 100px;
-    border-radius: 10px;
-    position: absolute;
-    cursor: pointer; 
-    visibility: visible;
-}
-
-.shortcut3:hover {
-    background-color: #b8b8b846;
-}
-.shortcut4{
-    margin-top: 210px;
-    margin-left: 770px;
-    width: 100px;
-    height: 100px;
-    border-radius: 10px;
-    position: absolute;
-    cursor: pointer;
-    visibility: visible;
-    
-}
-
-.shortcut4:hover {
-    background-color: #b8b8b846;
-}
-
-.shortcut-img {
-    width: 50px;
-    margin-top: 10px;
-    margin-left: 10px;
-}
-
-.shortcut-cont{
-    width: 70px;
-    height: 70px;
-    margin-top: 10px;
-    margin-left: 16px;
-    border-radius: 50px;
-    background-color: #444444;
-    z-index: 1;
-}
-
-.shortcut-text{
-    text-align: center;
-    color: white;
-
-}
-
-.shortcut-link{
-    width: 65px;
-    height: 100px;
-    position: absolute;
-
-}
-
-  
-
-
 .overlay {
     display: none;
     position: fixed;
@@ -485,4 +368,31 @@ main {
 
 .overlay {
     display: block;
+}
+
+.centro {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.search-input-box {
+    width: 100%;
+    max-width: 600px;
+    background-color: #2f3640;
+    border-radius: 100px;
+    padding: 0;
+}
+
+.search-input-box input {
+    width: 100%;
+    border: none;
+    outline: none;
+    border-radius: 120px;
+    height: 55px;
+    padding: 0 20px;
+    font-size: 18px;
+    color: #000;
 }
