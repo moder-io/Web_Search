@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    var apiKey = ''; // Pon tu api aqui
-    var city = ''; // Pon tu localidad aqui
+    var apiKey = API_KEY
+    var city = CITY
 
     function updateWeather() {
         $.getJSON('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=metric&appid=' + apiKey, function(data) {
@@ -28,5 +28,3 @@ $(document).ready(function() {
     setInterval(updateWeather, 10000);
     updateWeather();
 });
-
-

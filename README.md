@@ -20,6 +20,7 @@ Este es un proyecto de buscador web simple creado con HTML, CSS y JavaScript. La
 - `js/busqueda.js`: Script que maneja la funcionalidad del buscador.
 - `js/ajustes.js`: Script para la configuración de la página.
 - `js/tiempo.js`: Script que gestiona el widget del tiempo, aqui deveras agregar tu api de Open Weather Map y tu localidad.
+- `js/api.js.example`: Archivo de ejemplo donde se deben colocar tus claves y datos sensibles.
 
 ## Requisitos
 
@@ -37,9 +38,10 @@ Este es un proyecto de buscador web simple creado con HTML, CSS y JavaScript. La
 
 2. Abre el archivo `index.html` en tu navegador.
 
+3. Si quieres usar el widjet del clima tendras que renombrar api.js.example a api.js e introducir los datos
+
 ## Cómo usar
 
 - Para realizar una búsqueda, simplemente escribe el término en la barra de búsqueda y presiona "Enter".
 - Para agregar una aplicación personalizada, ve a la sección de "Apps", introduce la URL de la aplicación y la imagen, y presiona "Añadir App".
 - Usa la página de notas para escribir y descargar recordatorios o notas importantes.
-
