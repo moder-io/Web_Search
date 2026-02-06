@@ -29,8 +29,7 @@ body {
     padding: 20px;
     background-color: #fff;
     border-radius: 5px;
-    position: absolute;
-    margin-left: 400px;
+    position: relative;
     top: 0px;
     z-index: 2;
 }
@@ -48,8 +47,7 @@ main {
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    position: absolute;
-    margin-left: 300px;
+    position: relative;
     z-index: 5;
     display: block;
 }
@@ -109,21 +107,24 @@ a img {
 .notas-contenedor {
     margin-top: 100px;
     width: 600px;
-    position: absolute;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
     display: block;
 }
 
 
 .apps-contenedor1 {
-    margin-top: 50px;
+    margin-top: 20px;
     width: 800px;
 }
 .apps-contenedor2 {
-    margin-top: 200px;
+    margin-top: 40px;
     width: 800px;
 }
 .apps-contenedor3 {
-    margin-top: 350px;
+    margin-top: 40px;
     width: 800px;
 }
 
