@@ -1,9 +1,13 @@
 const inputSearch = document.getElementById('searchInput');
 const searchLink = document.getElementById('searchLink');
 
-inputSearch.addEventListener('keyup', (e) => {
+if (inputSearch && searchLink) {
+  inputSearch.addEventListener('keyup', (e) => {
     if (e.key === 'Enter') {
-        searchLink.href = `https://www.google.com/search?q=${inputSearch.value}`;
-        searchLink.click();
+      const q = inputSearch.value.trim();
+      if (!q) return;
+      searchLink.href = `https://www.google.com/search?q=${encodeURIComponent(q)}`;
+      searchLink.click();
     }
-});
+  });
+}

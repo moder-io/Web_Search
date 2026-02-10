@@ -1,151 +1,133 @@
-const textSizeSelect = document.getElementById('text-size-select');
-const applySettingsButton = document.getElementById('apply-settings');
-const exitSettingsButton = document.getElementById('exit-settings');
-const toggleSettings = document.getElementById('toggle-settings');
-const settingsContent = document.querySelector('.settings-content');
-const barraLateral = document.querySelector('.barra-lateral');
-const ladoBarraLateral = document.getElementById('lado-barra-lateral');
-const barraLateral1 = document.querySelector('.barra-lateral1');
-const barraLateral2 = document.querySelector('.barra-lateral2');
-const header = document.querySelector('.mi-header');
-const footer = document.querySelector(".mi-footer");
-const mostrar = document.getElementById("mostrar")
-const widjetTiempo = document.getElementById("weather")
-const diamante = document.getElementById('objeto')
+document.addEventListener('DOMContentLoaded', () => {
+  const textSizeSelect = document.getElementById('text-size-select');
+  const applySettingsButton = document.getElementById('apply-settings');
+  const exitSettingsButton = document.getElementById('exit-settings');
+  const toggleSettings = document.getElementById('toggle-settings');
+  const settingsContent = document.querySelector('.settings-content');
+  const mostrar = document.getElementById('mostrar');
+  const widjetTiempo = document.getElementById('weather');
 
-function applyStyles(selectedTextSize, mostar) {
-
+  function applyStyles(selectedTextSize, mostrarWidget) {
     switch (selectedTextSize) {
-        case 'small':
-            document.body.style.fontSize = '14px';
-            break;
-        case 'medium':
-            document.body.style.fontSize = '16px';
-            break;
-        case 'large':
-            document.body.style.fontSize = '18px';
-            break;
+      case 'small':
+        document.body.style.fontSize = '14px';
+        break;
+      case 'large':
+        document.body.style.fontSize = '18px';
+        break;
+      case 'medium':
+      default:
+        document.body.style.fontSize = '16px';
+        break;
     }
 
-    switch (mostar) {
-        case "si":
-            widjetTiempo.style.visibility = "visible";
-            break;
-        case "no":
-            widjetTiempo.style.visibility = "hidden";
-            break;
+    if (widjetTiempo) {
+      widjetTiempo.style.visibility = (mostrarWidget === 'no') ? 'hidden' : 'visible';
     }
-}
-setInterval(applyStyles, 10000);
-applyStyles();
+  }
 
-
-applySettingsButton.addEventListener('click', () => {
-    const selectedTextSize = textSizeSelect.value;
-    const mostar1 = mostrar.value;
-
-    applyStyles(selectedTextSize, mostar1);
-
-    localStorage.setItem('selectedTextSize', selectedTextSize);
-    localStorage.setItem('mostar', mostar1);
-});
-
-window.addEventListener('load', () => {
+  function loadSettings() {
     const savedTextSize = localStorage.getItem('selectedTextSize') || 'medium';
-    const savedMostrar = localStorage.getItem('mostar') || 'si';
+    const savedMostrar = localStorage.getItem('mostrar') || 'si';
 
-    textSizeSelect.value = savedTextSize;
-    mostrar.value = savedMostrar;
+    if (textSizeSelect) textSizeSelect.value = savedTextSize;
+    if (mostrar) mostrar.value = savedMostrar;
 
     applyStyles(savedTextSize, savedMostrar);
-});
+  }
 
-exitSettingsButton.addEventListener('click', () => {
-    settingsContent.style.display = 'none';
-});
+  function saveSettings() {
+    const selectedTextSize = textSizeSelect ? textSizeSelect.value : 'medium';
+    const mostrarValue = mostrar ? mostrar.value : 'si';
 
-toggleSettings.addEventListener('click', () => {
-    if (settingsContent.style.display === 'block') {
-        settingsContent.style.display = 'none';
-    } else {
-        settingsContent.style.display = 'block';
-    }
-});
+    localStorage.setItem('selectedTextSize', selectedTextSize);
+    localStorage.setItem('mostrar', mostrarValue);
 
+    applyStyles(selectedTextSize, mostrarValue);
+  }
 
+  if (applySettingsButton) {
+    applySettingsButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      saveSettings();
+    });
+  }
 
+  if (exitSettingsButton) {
+    exitSettingsButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (settingsContent) settingsContent.style.display = 'none';
+    });
+  }
 
+  if (toggleSettings) {
+    toggleSettings.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (!settingsContent) return;
+      settingsContent.style.display = (settingsContent.style.display === 'block') ? 'none' : 'block';
+    });
+  }
 
-window.onload = function () {
-    var enlacesGuardados = JSON.parse(localStorage.getItem('enlaces')) || [];
+  function renderLinks() {
+    const ul = document.getElementById('enlaces-lista');
+    if (!ul) return;
+    ul.querySelectorAll('li[data-user-link="1"]').forEach(li => li.remove());
 
-    if (enlacesGuardados.length > 0) {
-        var ul = document.getElementById('enlaces-lista');
+    const enlacesGuardados = JSON.parse(localStorage.getItem('enlaces') || '[]');
+    enlacesGuardados.forEach((enlace) => {
+      if (!enlace?.url || !enlace?.icono) return;
 
-        enlacesGuardados.forEach(function (enlace) {
-            var li = document.createElement('li');
-            var a = document.createElement('a');
-            var img = document.createElement('img');
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      const img = document.createElement('img');
 
-            a.href = enlace.url;
-            img.src = enlace.icono;
-            img.className = 'ico-barralateral';
-            li.className = 'enlace-barralateral';
+      li.className = 'enlace-barralateral';
+      li.dataset.userLink = '1';
 
-            a.appendChild(img);
-            li.appendChild(a);
-            ul.appendChild(li);
-        });
-    }
-};
+      a.href = enlace.url;
+      img.src = enlace.icono;
+      img.className = 'ico-barralateral';
 
-function agregarEnlace() {
-    var nuevoEnlace = document.getElementById('nuevo-enlace').value;
-    var nuevoIcono = document.getElementById('nuevo-icono').value;
+      a.appendChild(img);
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+  }
 
-    if (nuevoEnlace && nuevoIcono) {
-        var ul = document.getElementById('enlaces-lista');
-        var li = document.createElement('li');
-        var a = document.createElement('a');
-        var img = document.createElement('img');
+  window.agregarEnlace = function agregarEnlace() {
+    const nuevoEnlace = document.getElementById('nuevo-enlace')?.value?.trim();
+    const nuevoIcono = document.getElementById('nuevo-icono')?.value?.trim();
 
-        a.href = nuevoEnlace;
-        img.src = nuevoIcono;
-        img.className = 'ico-barralateral';
+    if (!nuevoEnlace || !nuevoIcono) return;
 
-        a.appendChild(img);
-        li.appendChild(a);
-        ul.appendChild(li);
+    const enlacesGuardados = JSON.parse(localStorage.getItem('enlaces') || '[]');
+    enlacesGuardados.push({ url: nuevoEnlace, icono: nuevoIcono });
+    localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
 
-        var enlacesGuardados = JSON.parse(localStorage.getItem('enlaces')) || [];
-        enlacesGuardados.push({ url: nuevoEnlace, icono: nuevoIcono });
-        localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+    document.getElementById('nuevo-enlace').value = '';
+    document.getElementById('nuevo-icono').value = '';
 
-        document.getElementById('nuevo-enlace').value = '';
-        document.getElementById('nuevo-icono').value = '';
-    }
-}
+    renderLinks();
+  };
 
-function borrarEnlace() {
-    var ul = document.getElementById('enlaces-lista');
-    ul.innerHTML = '';
+  window.borrarEnlace = function borrarEnlace() {
+    const ul = document.getElementById('enlaces-lista');
+    if (ul) ul.querySelectorAll('li[data-user-link="1"]').forEach(li => li.remove());
     localStorage.setItem('enlaces', '[]');
-}
+  };
 
+  const contenedorDireccion = document.querySelector('.contenedor-direccion');
+  const contenedorBoton = document.querySelector('.contenedor-boton');
+  let visible = false;
 
+  if (contenedorBoton && contenedorDireccion) {
+    contenedorBoton.addEventListener('click', (e) => {
+      e.preventDefault();
+      visible = !visible;
+      contenedorDireccion.style.visibility = visible ? 'visible' : 'hidden';
+    });
+  }
 
-
-const contenedorDireccion = document.querySelector('.contenedor-direccion');
-const contenedorBoton = document.querySelector('.contenedor-boton');
-let visible = false;
-
-contenedorBoton.addEventListener('click', function(e) {
-    e.preventDefault();
-    if (visible) {
-        contenedorDireccion.style.visibility = 'hidden';
-        visible = false;
-    } else {
-        contenedorDireccion.style.visibility = 'visible';
-        visible = true;
-    }
-})
+  loadSettings();
+  renderLinks();
+});

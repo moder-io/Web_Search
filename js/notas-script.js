@@ -1,58 +1,46 @@
-const form = document.getElementById('notas-form');
 const textarea = document.getElementById('mensaje');
-const notasContainer = document.getElementById('notas-recipiente'); 
+const notasContainer = document.getElementById('notas-recipiente');
 const descargarBtn = document.getElementById('descargar-btn');
-const savedText = localStorage.getItem('notas-text');
-const savedNotes = JSON.parse(localStorage.getItem('notas-list')) || [];
-const borrar = document.getElementById('borrar');
 
-descargarBtn.addEventListener('click', () => {
-  const fecha = new Date().toLocaleDateString();
-  const nota = textarea.value + "\n";
-
-  const titulo = "Fecha:" + new Date().toLocaleDateString() + "\n";
-  const blank = "\n";
-  const titulo2 = "Notas:";
-  const contenido = titulo + blank + titulo2 + blank + textarea.value;
-  localStorage.setItem('notas-text', textarea.value);
-  const blob = new Blob([contenido], { type: 'text/plain' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'notas/recordatorios.txt';
-  a.click();
-
-  if (nota.trim() !== '') {
-    const nuevaNota = {
-      fecha: fecha,
-      contenido: nota,
-    };
-
-    savedNotes.unshift(nuevaNota);
-
-    if (savedNotes.length > 10) {
-      savedNotes.pop();
-    }
-    localStorage.setItem('notas-list', JSON.stringify(savedNotes));
-    textarea.value = '';
-    cargarNotas();
-  }
-});
+const savedNotes = JSON.parse(localStorage.getItem('notas-list') || '[]');
 
 function cargarNotas() {
+  if (!notasContainer) return;
+
   notasContainer.innerHTML = '';
   savedNotes.forEach((nota, index) => {
     const notaDiv = document.createElement('div');
     notaDiv.classList.add('nota');
     notaDiv.innerHTML = `<strong>Fecha:</strong> ${nota.fecha}<br><strong>Notas:</strong> ${nota.contenido}`;
-    
     notasContainer.appendChild(notaDiv);
 
     if (index < savedNotes.length - 1) {
-      const hr = document.createElement('hr');
-      notasContainer.appendChild(hr);
+      notasContainer.appendChild(document.createElement('hr'));
     }
   });
 }
 
-setInterval(cargarNotas, 10000);
-cargarNotas()
+if (descargarBtn && textarea) {
+  descargarBtn.addEventListener('click', () => {
+    const texto = textarea.value.trim();
+    if (!texto) return;
+
+    const fecha = new Date().toLocaleDateString();
+
+    const contenido = `Fecha:${fecha}\n\nNotas:\n\n${texto}`;
+    const blob = new Blob([contenido], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'notas/recordatorios.txt';
+    a.click();
+
+    savedNotes.unshift({ fecha, contenido: texto + "\n" });
+    if (savedNotes.length > 10) savedNotes.pop();
+    localStorage.setItem('notas-list', JSON.stringify(savedNotes));
+
+    textarea.value = '';
+    cargarNotas();
+  });
+}
+
+cargarNotas();
